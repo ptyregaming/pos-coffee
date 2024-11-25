@@ -43,7 +43,7 @@ const Products = ({ activeCategory, addToOrder }) => {
           onClick={() => addToOrder(product) && product.stock - 1} 
           
           disabled={product.stock === 0}
-          // Trigger the addToOrder function
+          
         >
           <img src={product.image} alt={product.name} />
           <h3>{product.name}</h3>

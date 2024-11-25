@@ -20,6 +20,10 @@ const OrderSummary = ({ orders }) => {
     setIsPopupOpen(false); // Close the popup modal
   };
 
+  const handlePrint = () => {
+    window.print(); // Trigger print dialog
+  };
+
   return (
     <div className="order-summary">
       <div className="order-header">
@@ -81,16 +85,35 @@ const OrderSummary = ({ orders }) => {
       {isPopupOpen && (
         <div className="payment-popup">
           <div className="popup-content">
-            <h3>Payment Confirmation</h3>
-            <p>
-              Total Payment: <strong>Rp {calculateTotal().toLocaleString()}</strong>
-            </p>
-            <button className="close-button" onClick={closePopup}>
-              Close
-            </button>
-            <button className="confirm-button" onClick={() => alert("Payment Successful!")}>
-              Confirm Payment
-            </button>
+            <div id="receipt-content">
+              <h3>Payment Receipt</h3>
+              <p>Order Number: #34562</p>
+              <p>Delivery Type: {deliveryType}</p>
+              <div className="receipt-items">
+                {orders.map((order, index) => (
+                  <div key={index} className="receipt-item">
+                    <span>
+                      {order.name} x {order.quantity}
+                    </span>
+                    <span>
+                      Rp {(order.price * order.quantity).toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="receipt-total">
+                <strong>Total:</strong>
+                <span>Rp {calculateTotal().toLocaleString()}</span>
+              </div>
+            </div>
+            <div className="popup-actions">
+              <button className="close-button" onClick={closePopup}>
+                Close
+              </button>
+              <button className="print-button" onClick={handlePrint}>
+                Print Receipt
+              </button>
+            </div>
           </div>
           <div className="popup-overlay" onClick={closePopup}></div>
         </div>

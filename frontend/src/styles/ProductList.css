@@ -4,14 +4,12 @@
     padding: 20px;
     border-radius: 8px;
     flex: 2;
-  }
-  
+  }  
   .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
-  
   .product-card {
     background: #333344;
     padding: 15px;
@@ -19,16 +17,13 @@
     text-align: center;
     color: white;
   }
-  
   .product-card h3 {
     font-size: 18px;
   }
-  
   .product-card p {
     font-size: 14px;
     margin: 5px 0;
   }
-  
   .product-card button {
     background: #f05454;
     color: white;
@@ -38,11 +33,9 @@
     cursor: pointer;
     font-size: 14px;
   }
-  
   .product-card button:hover {
     background: #d03a3a;
   }
-  
   .product-card button.disabled {
     background: #888888;
     cursor: not-allowed;

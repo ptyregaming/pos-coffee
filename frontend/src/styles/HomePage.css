@@ -1,65 +1,52 @@
-/* Layout */
 .homepage {
-    display: grid;
-    grid-template-columns: 15% 1fr 25%;
-    height: 110vh;
-    background-color: #121212;
-    color: #ffffff;
-  }
-  
-  .main-content {
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .categories button {
-    margin: 5px 5px;
-    padding: 10px;
-    background: #252b42;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .categories .active {
-    background: #f05454;
-  }
-  
-  .categories button:hover {
-    background: #3b3f54;
-  }
-  
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .product-card {
-    background: #252b42;
-    border-radius: 8px;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .order-section {
-    background-color: #1e1e2e;
-    padding: 20px;
-  }
-  
-
-  
-  .categories .active {
-    background: #f05454;
-  }
-  
-  .categories button:hover {
-    background: #3b3f54;
-  }
+  display: grid;
+  grid-template-columns: 15% 1fr 25%;
+  height: 110vh;
+  background-color: #121212;
+  color: #ffffff;
+}
+.main-content {
+  padding: 20px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.categories button {
+  margin: 5px 5px;
+  padding: 10px;
+  background: #252b42;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.categories .active {
+  background: #f05454;
+}
+.categories button:hover {
+  background: #3b3f54;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.product-card {
+  background: #252b42;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px;
+}
+.order-section {
+  background-color: #1e1e2e;
+  padding: 20px;
+}
+.categories .active {
+  background: #f05454;
+}
+.categories button:hover {
+  background: #3b3f54;
+}

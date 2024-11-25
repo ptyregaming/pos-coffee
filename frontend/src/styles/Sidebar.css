@@ -10,35 +10,28 @@
     
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   }
-  
- 
   .sidebar-header {
     text-align: center;
     margin-bottom: 20px;
   }
-  
   .sidebar-header h1 {
     font-size: 20px;
     margin: 0;
     color: #f05454; 
   }
-  
   .sidebar-header p {
     margin: 5px 0;
     font-size: 14px;
     color: #c4c4c4; 
   }
-  
   .sidebar-menu {
     margin-bottom: auto;
   }
-
   .sidebar-menu ul {
     list-style: none;
     padding: 0;
     
   }
-  
   .sidebar-menu li {
     display: flex;
     align-items: center;
@@ -48,17 +41,14 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
   .sidebar-menu li:hover {
     background-color: #252b42; 
   }
-  
   .sidebar-menu .menu-icon {
     font-size: 18px;
     margin-right: 10px;
     color: #f05454; 
   }
-  
   .sidebar-menu span {
     font-size: 16px;
     color: #ffffff;
@@ -68,11 +58,9 @@
     .sidebar {
       width: 200px; 
     }
-  
     .sidebar-header h1 {
       font-size: 16px; 
     }
-  
     .sidebar-menu span {
       font-size: 14px; 
     }

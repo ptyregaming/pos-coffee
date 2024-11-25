@@ -1,4 +1,4 @@
-// src/pages/HomePage.js
+
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Products from "../components/Products";
@@ -7,7 +7,7 @@ import "../styles/HomePage.css";
 
 const HomePage = () => {
   const [activeCategory, setActiveCategory] = useState("Handcrafted Espresso");
-  const [orders, setOrders] = useState([]); // State for order summary
+  const [orders, setOrders] = useState([]); 
 
   const categories = [
     "Handcrafted Espresso",
@@ -18,13 +18,13 @@ const HomePage = () => {
     "Bread",
   ];
 
-  // Function to add a product to the orders
+  
   const addToOrder = (product) => {
      
     const existingOrder = orders.find((order) => order.name === product.name);
 
     if (existingOrder) {
-      // Increment quantity if the product already exists
+      
       setOrders(
         orders.map((order) =>
           order.name === product.name
@@ -33,7 +33,7 @@ const HomePage = () => {
         )
       );
     } else {
-      // Add new product to the order summary
+      
       setOrders([...orders, { ...product, quantity: 1 }]);
     }
   };

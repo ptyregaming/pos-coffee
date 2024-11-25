@@ -1,6 +1,6 @@
 
 import React from "react";
-import { FaHome, FaClipboardList, FaEnvelope, FaBell, FaCog } from "react-icons/fa"; // Icons from react-icons
+import { FaHome, FaClipboardList, FaEnvelope, FaBell, FaCog } from "react-icons/fa"; 
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
