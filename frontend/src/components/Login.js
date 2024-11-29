@@ -16,10 +16,8 @@ const Login = ({ setUserId }) => {
       setError("Please enter both User ID and Password.");
       return;
     }
-
-    // Simulate successful login
-    setUserId(userIdInput); // Store the user ID in App state
-    navigate("/homepage"); // Redirect to the homepage
+    setUserId(userIdInput); 
+    navigate("/homepage"); 
   };
 
   return (
