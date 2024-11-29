@@ -1,6 +1,7 @@
 
 import React from "react";
 import "../styles/Products.css";
+import Image from '../pictures/espresso.jpg';
 
 const Products = ({ activeCategory, addToOrder }) => {
   const products = [
@@ -8,7 +9,7 @@ const Products = ({ activeCategory, addToOrder }) => {
       name: "Espresso",
       price: 20000,
       stock: 20 ,
-      image: "https://via.placeholder.com/100",
+      image: "{Image}",
       category: "Handcrafted Espresso",
     },
     {

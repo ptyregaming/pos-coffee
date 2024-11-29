@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/OrderSummary.css";
 
+
 const OrderSummary = ({ orders }) => {
   const [deliveryType, setDeliveryType] = useState("Makan/Minum Di Sini");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -87,7 +88,11 @@ const OrderSummary = ({ orders }) => {
           <div className="popup-content">
             <div id="receipt-content">
               <h3>Payment Receipt</h3>
-              <p>Order Number: #34562</p>
+              <p>Receipt Number: #34562</p>
+              <p>Order ID: #S4TQYG</p>
+              <p>Served By : SuasanaKopi_BI</p>
+              <p>Collected By: SuasanaKopi</p>
+              <p>------------------------------------------------------------------------------------------------</p>
               <p>Delivery Type: {deliveryType}</p>
               <div className="receipt-items">
                 {orders.map((order, index) => (
@@ -101,6 +106,7 @@ const OrderSummary = ({ orders }) => {
                   </div>
                 ))}
               </div>
+              <p>------------------------------------------------------------------------------------------------</p>
               <div className="receipt-total">
                 <strong>Total:</strong>
                 <span>Rp {calculateTotal().toLocaleString()}</span>

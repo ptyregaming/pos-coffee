@@ -1,14 +1,22 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Products from "../components/Products";
 import OrderSummary from "../components/OrderSummary";
 import "../styles/HomePage.css";
 
-const HomePage = () => {
+
+const HomePage = ({ userId, setUserId }) => {
   const [activeCategory, setActiveCategory] = useState("Handcrafted Espresso");
   const [orders, setOrders] = useState([]); 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setUserId(null); // Clear the user ID from state
+    navigate("/"); // Redirect to login page
+  };
 
+  
   const categories = [
     "Handcrafted Espresso",
     "Signature Coffee",
@@ -38,12 +46,17 @@ const HomePage = () => {
     }
   };
 
+  
   return (
     <div className="homepage">
       <Sidebar />
       <main className="main-content">
         <div className="header">
           <h2>Pilih Kopimu</h2>
+          {userId && <p><strong>{userId}</strong></p>}
+          <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
           <div className="categories">
             {categories.map((category) => (
               <button

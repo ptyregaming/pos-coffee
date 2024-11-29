@@ -1,17 +1,19 @@
 .order-summary {
-    background: #252b42; 
-    color: white; 
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%; 
-    max-width: 300px; 
-    margin-left: auto; 
-  }
-  .order-header {
-    margin-bottom: 20px;
-  }
+  background: #1a1a2e;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.order-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
   .order-header h2 {
     margin: 0 0 10px;
     font-size: 20px;
@@ -19,10 +21,10 @@
   }
   .delivery-options {
     display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-right: 5%;
-    margin-left: 5%;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
   }
   .delivery-options button {
     flex: 1;
