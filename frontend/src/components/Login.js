@@ -11,7 +11,6 @@ const Login = ({ setUserId }) => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Simple validation (ensure fields are not empty)
     if (!userIdInput || !passwordInput) {
       setError("Please enter both User ID and Password.");
       return;
