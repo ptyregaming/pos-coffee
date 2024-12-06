@@ -1,6 +1,6 @@
-
 import React from "react";
-import { FaHome, FaClipboardList, FaEnvelope, FaBell, FaCog } from "react-icons/fa"; 
+import { Link } from "react-router-dom";
+import { FaHome, FaClipboardList, FaEnvelope, FaBell, FaCog } from "react-icons/fa";
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
@@ -8,7 +8,7 @@ const Sidebar = () => {
     <aside className="sidebar">
       <div className="sidebar-header">
         <h1>Suasana Kopi</h1>
-        <p>Sabtu, 23 nov 2024</p>
+        <p>Sabtu, 23 Nov 2024</p>
       </div>
       <nav className="sidebar-menu">
         <ul>
@@ -29,8 +29,10 @@ const Sidebar = () => {
             <span>Notifications</span>
           </li>
           <li>
-            <FaCog className="menu-icon" />
-            <span>Settings</span>
+            <Link to="/dashboard" className="menu-link">
+              <FaCog className="menu-icon" />
+              <span>Settings</span>
+            </Link>
           </li>
         </ul>
       </nav>

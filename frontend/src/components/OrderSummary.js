@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import "../styles/OrderSummary.css";
 
-
 const OrderSummary = ({ orders }) => {
   const [deliveryType, setDeliveryType] = useState("Makan/Minum Di Sini");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [orderId, setOrderId] = useState(generateRandomId());
+  const [receiptNumber, setReceiptNumber] = useState(generateRandomId());
+
+  // Function to generate a random alphanumeric ID
+  function generateRandomId() {
+    return Math.random().toString(36).substr(2, 8).toUpperCase();
+  }
 
   const calculateTotal = () =>
-    orders.reduce((total, order) => total + order.price * order.quantity, 0);
+    orders.reduce(
+      (total, order) => total + (order.price || 0) * (order.quantity || 0),
+      0
+    );
 
   const handleDeliveryTypeChange = (type) => {
     setDeliveryType(type);
   };
 
   const handlePayment = () => {
+    setOrderId(generateRandomId()); // Generate new Order ID
+    setReceiptNumber(generateRandomId()); // Generate new Receipt Number
     setIsPopupOpen(true); // Open the popup modal
   };
 
@@ -22,13 +33,15 @@ const OrderSummary = ({ orders }) => {
   };
 
   const handlePrint = () => {
+    setOrderId(generateRandomId()); // Generate new Order ID
+    setReceiptNumber(generateRandomId()); // Generate new Receipt Number
     window.print(); // Trigger print dialog
   };
 
   return (
     <div className="order-summary">
       <div className="order-header">
-        <h2>Orders #34562</h2>
+        <h2>Orders #{receiptNumber}</h2>
         <div className="delivery-options">
           <button
             className={deliveryType === "Makan/Minum Di Sini" ? "active" : ""}
@@ -58,13 +71,13 @@ const OrderSummary = ({ orders }) => {
               <div className="item-info">
                 <span className="item-name">{order.name}</span>
                 <span className="item-price">
-                  Rp {order.price.toLocaleString()}
+                  Rp {(order.price || 0).toLocaleString()}
                 </span>
               </div>
               <div className="item-quantity">
-                <span>x {order.quantity}</span>
+                <span>x {order.quantity || 0}</span>
                 <span>
-                  Rp {(order.price * order.quantity).toLocaleString()}
+                  Rp {((order.price || 0) * (order.quantity || 0)).toLocaleString()}
                 </span>
               </div>
             </div>
@@ -88,9 +101,9 @@ const OrderSummary = ({ orders }) => {
           <div className="popup-content">
             <div id="receipt-content">
               <h3>Payment Receipt</h3>
-              <p>Receipt Number: #34562</p>
-              <p>Order ID: #S4TQYG</p>
-              <p>Served By : SuasanaKopi_BI</p>
+              <p>Receipt Number: #{receiptNumber}</p>
+              <p>Order ID: #{orderId}</p>
+              <p>Served By: SuasanaKopi_BI</p>
               <p>Collected By: SuasanaKopi</p>
               <p>------------------------------------------------------------------------------------------------</p>
               <p>Delivery Type: {deliveryType}</p>
@@ -98,10 +111,10 @@ const OrderSummary = ({ orders }) => {
                 {orders.map((order, index) => (
                   <div key={index} className="receipt-item">
                     <span>
-                      {order.name} x {order.quantity}
+                      {order.name} x {order.quantity || 0}
                     </span>
                     <span>
-                      Rp {(order.price * order.quantity).toLocaleString()}
+                      Rp {((order.price || 0) * (order.quantity || 0)).toLocaleString()}
                     </span>
                   </div>
                 ))}

@@ -1,54 +1,61 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../styles/Products.css";
-import Image from '../pictures/espresso.jpg';
 
 const Products = ({ activeCategory, addToOrder }) => {
-  const products = [
-    {
-      name: "Espresso",
-      price: 20000,
-      stock: 20 ,
-      image: "{Image}",
-      category: "Handcrafted Espresso",
-    },
-    {
-      name: "Doppio",
-      price: 25000,
-      stock: 11,
-      image: "https://via.placeholder.com/100",
-      category: "Handcrafted Espresso",
-    },
-    {
-      name: "Caffe Americano",
-      price: 30000,
-      stock: 16,
-      image: "https://via.placeholder.com/100",
-      category: "Signature Coffee",
-    },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/api/viewproduk.php")
+      .then((response) => {
+        const data = Array.isArray(response.data) ? response.data : [];
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Terjadi kesalahan saat memuat data");
+        setLoading(false);
+      });
+  }, []);
 
   const filteredProducts =
     activeCategory === "All"
       ? products
-      : products.filter((product) => product.category === activeCategory);
+      : products.filter((product) => product.kategori_nama === activeCategory);
 
-      
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (filteredProducts.length === 0) {
+    return <div>Produk tidak tersedia.</div>;
+  }
+
   return (
     <div className="products">
       {filteredProducts.map((product, index) => (
         <div
           className="product-card"
           key={index}
-          onClick={() => addToOrder(product) && product.stock - 1} 
-          
-          disabled={product.stock === 0}
-          
+          onClick={() =>
+            addToOrder({
+              name: product.produk_judul,
+              price: product.produk_harga,
+              quantity: 1,
+            })
+          }
         >
-          <img src={product.image} alt={product.name} />
-          <h3>{product.name}</h3>
-          <p>Rp {product.price.toLocaleString()}</p>
+          <img src={product.produk_image} alt={product.produk_judul} />
+          <h3>{product.produk_judul}</h3>
+          <p>Rp {product.produk_harga.toLocaleString()}</p>
           <span>Tinggal {product.stock} porsi</span>
         </div>
       ))}
