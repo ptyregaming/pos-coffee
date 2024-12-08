@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/UserCRUD.css';  // Import custom styles for the modal
+import { Link } from 'react-router-dom'; 
+import '../styles/UserCRUD.css'; 
 
 const API_URL = 'http://localhost/api/users_api.php';
 
@@ -119,7 +120,11 @@ const UserCRUD = () => {
   return (
     <div className="user-crud-container">
       <h1>User Management</h1>
-      <button onClick={toggleModal} className="open-modal-btn">Add User</button>
+      <Link to="/dashboard">
+        <button className="back-to-dashboard-btn">Back to Dashboard</button>
+      </Link>
+
+      <button onClick={toggleModal} className="open-modal-btn-new">Add User</button>
 
       {/* Modal */}
       {isModalOpen && (
@@ -184,8 +189,8 @@ const UserCRUD = () => {
                   placeholder="Level"
                 />
               </div>
-              <button type="submit" className="submit-btn">{editingId ? 'Update' : 'Add'} User</button>
-              <button type="button" className="close-modal-btn" onClick={toggleModal}>Close</button>
+              <button type="submit" className="submit-btn-new">{editingId ? 'Update' : 'Add'} User</button>
+              <button type="button" className="close-modal-btn-new" onClick={toggleModal}>Close</button>
             </form>
           </div>
         </div>
@@ -213,8 +218,8 @@ const UserCRUD = () => {
               <td>{user.nomorTelepon}</td>
               <td>{user.level}</td>
               <td>
-                <button onClick={() => handleEdit(user)} className="edit-btn">Edit</button>
-                <button onClick={() => handleDelete(user.id)} className="delete-btn">Delete</button>
+                <button onClick={() => handleEdit(user)} className="edit-btn-new">Edit</button>
+                <button onClick={() => handleDelete(user.id)} className="delete-btn-new">Delete</button>
               </td>
             </tr>
           ))}

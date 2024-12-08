@@ -1,108 +1,149 @@
-/* Styling dasar untuk Dashboard */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  .dashboard {
-    padding: 20px;
-  }
-  
+/* General styles */
+.dashboard {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f1e1; /* Light coffee cream background */
+  color: #6f4e37; /* Coffee brown text */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header and Hamburger Menu */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #6f4e37; /* Coffee brown */
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hamburger {
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger .line {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger .line.open:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger .line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger .line.open:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Navigation Menu */
+.navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #4e3629; /* Dark coffee brown */
+  color: #fff;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  padding: 2rem 1rem;
+  z-index: 1000;
+}
+
+.navigation.open {
+  transform: translateX(0);
+}
+
+.navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation ul li {
+  margin: 1rem 0;
+}
+
+.navigation ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.navigation ul li a:hover {
+  color: #8b5e34; /* Lighter coffee bean color */
+}
+
+/* Main Content */
+main {
+  padding: 1rem;
+  background-color: #fff8f0; /* Soft coffee parchment background */
+  color: #6f4e37;
+}
+
+button {
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #8b5e34; /* Coffee bean brown */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #5e3d1e; /* Darker coffee bean */
+}
+
+/* Links and Text */
+a {
+  color: #6f4e37; /* Coffee brown */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #8b5e34; /* Lighter coffee bean color */
+}
+
+h1, h2, h3, h4 {
+  color: #6f4e37; /* Coffee brown */
+}
+
+/* Sidebar Styling */
+.navigation {
+  background-color: #4e3629; /* Dark coffee brown */
+}
+
+.navigation ul li a {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.navigation ul li a:hover {
+  color: #e67e22; /* Warm orange tone for hover effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .navigation {
-    background-color: #007bff;
-    padding: 10px;
-    margin-bottom: 20px;
+    width: 200px;
   }
-  
-  .navigation ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 10px;
+
+  .header {
+    padding: 0.5rem;
   }
-  
-  .navigation ul li {
-    display: inline;
-  }
-  
-  .navigation ul li a {
-    text-decoration: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .navigation ul li a:hover {
-    background-color: #0056b3;
-  }
-  
-  .form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .form input {
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .form button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .user-table th, .user-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .user-table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .user-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .user-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
-  
-  .loading {
-    color: #007bff;
-    font-weight: bold;
-  }
-  
+}

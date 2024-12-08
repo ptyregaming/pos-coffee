@@ -1,12 +1,13 @@
 .order-summary {
-  background: #1a1a2e;
-  color: #ffffff;
+  background: #3d1701; /* Dark coffee brown */
+  color: #f4e1d2; /* Light cream color */
   padding: 20px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .order-header {
   display: flex;
   flex-direction: column;
@@ -14,110 +15,163 @@
   text-align: center;
   margin-bottom: 20px;
 }
-  .order-header h2 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    color: #ffffff;
-  }
-  .delivery-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  .delivery-options button {
-    flex: 1;
-    background: #333344; 
-    color: white;
-    padding: 10px 5px;
-    border: none;
-    border-radius: 5px;
+
+.order-header h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #f4e1d2;
+}
+
+.delivery-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.delivery-options button {
+  flex: 1;
+  background: #4e3b31; /* Coffee brown button */
+  color: white;
+  padding: 10px 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delivery-options button.active {
+  background: #f05454; /* Active button color */
+}
+
+.delivery-options button:hover {
+  background: #8e5a3f; /* Slightly lighter brown on hover */
+}
+
+.order-items {
+  flex-grow: 1;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #5a3e3a; /* Soft coffee brown line */
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 16px;
+  color: #f4e1d2;
+}
+
+.item-price {
+  font-size: 14px;
+  color: #c4c4c4; /* Soft beige for price */
+}
+
+.item-quantity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.item-quantity span {
+  font-size: 14px;
+  color: #f4e1d2; /* Light cream color */
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+/* Order Total */
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-right: 5%;
+  margin-left: 5%;
+  color: #f4e1d2; /* Light cream color */
+}
+
+.pay-button {
+  background: #f05454; /* Coffee red color */
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 20%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.pay-button:hover {
+  background: #d03a3a; /* Darker coffee red on hover */
+}
+
+.pay-button:active {
+  background: #b02e2e; /* Darker coffee red on active */
+}
+
+.receipt {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 10px;
+  background: #f4e1d2; /* Light cream background for receipt */
+  color: #3e2a47; /* Dark coffee brown text */
+}
+
+.receipt h4 {
+  text-align: center;
+}
+
+.receipt ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.receipt li {
+  margin-bottom: 5px;
+}
+
+@media print {
+  .receipt {
+    width: 100%;
     font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
   }
-  .delivery-options button.active {
-    background: #f05454; }
-  
-  .delivery-options button:hover {
-    background: #444455; 
+
+  button {
+    display: none;
   }
-  .order-items {
-    flex-grow: 1; 
-    margin-bottom: 20px;
-    overflow-y: auto; 
-    padding-right: 10px; 
-    margin-right: 5%;
-    margin-left: 5%;
-  }
-  .order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #3a3a4a;
-  }
-  .order-item:last-child {
-    border-bottom: none;
-  }
-  .item-info {
-    display: flex;
-    flex-direction: column;
-  }
-  .item-name {
-    font-size: 16px;
-  }
-  .item-price {
-    font-size: 14px;
-    color: #c4c4c4; 
-  }
-  .item-quantity {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .item-quantity span {
-    font-size: 14px;
-  }
-  .empty-message {
-    text-align: center;
-    font-size: 14px;
-    color: #c4c4c4;
-  }
-  /* Order Total */
-  .order-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-right: 5%;
-    margin-left: 5%;
-  }
-  .pay-button {
-    background: #f05454; 
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-bottom: 20%;
-    margin-right: 5%;
-    margin-left: 5%;
-  }
-  .pay-button:hover {
-    background: #d03a3a; 
-  }
-  .pay-button:active {
-    background: #b02e2e; 
-  }
-  
-  /* Payment Popup */
+}
+
+/* Payment Popup */
 .payment-popup {
   position: fixed;
   top: 0;
@@ -143,7 +197,7 @@
 .popup-content {
   position: relative;
   background: #ffffff;
-  color: #000000;
+  color: #3e2a47; /* Coffee color for text */
   padding: 20px 30px;
   border-radius: 8px;
   z-index: 1000;
@@ -183,7 +237,7 @@
 
 .close-button,
 .print-button {
-  background: #f05454;
+  background: #f05454; /* Coffee red color */
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -195,7 +249,7 @@
 
 .close-button:hover,
 .print-button:hover {
-  background: #b03a3a;
+  background: #b0813a; /* Darker coffee red on hover */
 }
 
 /* Print-specific CSS */

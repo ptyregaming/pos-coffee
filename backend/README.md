@@ -1,5 +1,5 @@
 # pos-coffee
 
-# disini isi dari backend
+# disini isi dari backend untuk project kami menggunakan Xammp untuk pengetesan
 
 

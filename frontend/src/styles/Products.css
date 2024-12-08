@@ -1,29 +1,82 @@
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  } 
-  .product-card {
-    background: #252b42;
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 200px;
-    text-align: center;
-    transition: transform 0.2s;
-  }
-  .product-card:hover {
-    transform: scale(1.05);
-  }
-  .product-card img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-  .product-card h3 {
-    margin: 10px 0;
-  }
-  .product-card p {
-    font-weight: bold;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Centering the products */
+  margin-top: 20px;
+}
+
+.product-card {
+  background: #3e2a47; /* Dark coffee brown background */
+  color: #f4e1d2; /* Light cream text color */
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.product-card:hover {
+  transform: scale(1.05); /* Slight scaling effect on hover */
+  background-color: #8e5a3f; /* Light coffee brown on hover */
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px; /* Space between image and text */
+}
+
+.product-card h3 {
+  margin: 10px 0;
+  font-family: 'Cursive', sans-serif; /* Cozy, stylish font for product name */
+  font-size: 18px;
+  color: #f4e1d2; /* Light cream color for the product name */
+}
+
+.product-card p {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 5px 0;
+  color: #f4e1d2; /* Cream color for the description */
+}
+
+.product-card .price {
+  font-size: 16px;
+  color: #f05454; /* Coffee red color for prices */
+}
+
+.product-card button {
+  background: #f05454; /* Coffee red */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+  background: #d03a3a; /* Darker coffee red on hover */
+}
+
+.product-card button:disabled {
+  background: #888888; /* Disabled state */
+  cursor: not-allowed;
+}
+
+
+body {
+  background-image: url('http://localhost/api/uploads/%20bustling%20coffee.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}

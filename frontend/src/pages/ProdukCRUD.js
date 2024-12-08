@@ -1,225 +1,300 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/ProdukCRUD.css'; // Import gaya khusus untuk modal
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/ProdukCRUD.css';
+import { Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost/api/produk_api.php';
+const API_INSERT = 'http://localhost/api/insertproduk.php';
+const API_UPDATE = 'http://localhost/api/updateproduk.php';
+const API_VIEW = 'http://localhost/api/viewproduk.php';
+const API_CATEGORY = 'http://localhost/api/viewkategori.php';
+const API_DELETE = 'http://localhost/api/deleteproduk.php';
 
 const ProdukCRUD = () => {
   const [produk, setProduk] = useState([]);
   const [formData, setFormData] = useState({
+    produk_id: '',
     kategori_id: '',
     produk_judul: '',
     produk_harga: '',
     produk_deskripsi: '',
-    produk_image: '',
+    produk_image: null,
+    stok: '',
   });
-  const [editingId, setEditingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [kategori, setKategori] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  // Ambil data produk
   const fetchProduk = async () => {
     try {
-      const response = await fetch(`${API_URL}?action=read`);
-      
-      // Log respon mentah untuk debugging
-      if (!response.ok) {
-        console.error('Gagal mengambil data produk:', response.statusText);
-        alert(`Gagal mengambil data produk: ${response.statusText}`);
-        return;
-      }
-
-      const responseText = await response.text();
-      try {
-        const data = JSON.parse(responseText);
-        if (data.status === 'success') {
-          setProduk(data.data);
-        } else {
-          console.error('Gagal mengambil data produk:', data.message);
-          alert('Gagal mengambil data produk.');
-        }
-      } catch (jsonError) {
-        console.error('Kesalahan parsing JSON:', responseText);
-        alert('Kesalahan parsing data respon. Periksa format respon dari server.');
-      }
-    } catch (error) {
-      console.error('Kesalahan saat mengambil data produk:', error);
-      alert('Terjadi kesalahan saat mengambil data produk.');
-    }
-  };
-
-  // Tangani pengiriman formulir untuk tambah atau ubah produk
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const action = editingId ? 'update' : 'create';
-    const url = editingId ? `${API_URL}?action=${action}&id=${editingId}` : `${API_URL}?action=${action}`;
-    const method = editingId ? 'PUT' : 'POST';
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(API_VIEW);
+      if (!response.ok) throw new Error(`Error: ${response.statusText}`);
       const data = await response.json();
-      if (data.status === 'success') {
-        alert(data.data);
-        setFormData({
-          kategori_id: '',
-          produk_judul: '',
-          produk_harga: '',
-          produk_deskripsi: '',
-          produk_image: '',
-        });
-        setEditingId(null);
-        fetchProduk();
-        setIsModalOpen(false); // Tutup modal setelah pengiriman
-      } else {
-        alert(data.data);
-      }
+      setProduk(data);
     } catch (error) {
-      console.error('Kesalahan saat mengirim formulir:', error);
-      alert('Terjadi kesalahan saat mengirim formulir.');
+      console.error('Error fetching produk:', error);
+      alert('Gagal mengambil data produk.');
     }
   };
 
-  // Tangani aksi hapus
-  const handleDelete = async (id) => {
-    if (!window.confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
-
+  const fetchKategori = async () => {
     try {
-      const response = await fetch(`${API_URL}?action=delete&id=${id}`, { method: 'DELETE' });
+      const response = await fetch(API_CATEGORY);
+      if (!response.ok) throw new Error(`Error: ${response.statusText}`);
       const data = await response.json();
-      if (data.status === 'success') {
-        alert(data.data);
-        fetchProduk();
-      } else {
-        alert(data.data);
-      }
+      setKategori(data);
     } catch (error) {
-      console.error('Kesalahan saat menghapus produk:', error);
-      alert('Terjadi kesalahan saat menghapus produk.');
+      console.error('Error fetching kategori:', error);
+      alert('Gagal mengambil data kategori.');
     }
-  };
-
-  // Tangani aksi edit
-  const handleEdit = (produk) => {
-    setFormData({
-      kategori_id: produk.kategori_id,
-      produk_judul: produk.produk_judul,
-      produk_harga: produk.produk_harga,
-      produk_deskripsi: produk.produk_deskripsi,
-      produk_image: produk.produk_image,
-    });
-    setEditingId(produk.produk_id);
-    setIsModalOpen(true); // Buka modal saat mengedit
-  };
-
-  // Ubah status modal untuk menambah produk baru
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-    setFormData({
-      kategori_id: '',
-      produk_judul: '',
-      produk_harga: '',
-      produk_deskripsi: '',
-      produk_image: '',
-    });
-    setEditingId(null); // Reset status edit saat menambah produk baru
   };
 
   useEffect(() => {
     fetchProduk();
+    fetchKategori();
   }, []);
 
-  return (
-    <div className="produk-crud-container">
-      <h1>Manajemen Produk</h1>
-      <button onClick={toggleModal} className="open-modal-btn">Tambah Produk</button>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formDataObj = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataObj.append(key, formData[key]);
+    });
 
-      {/* Modal */}
+    try {
+      const API_URL = isEditMode ? API_UPDATE : API_INSERT;
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formDataObj,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message || (isEditMode ? 'Produk berhasil diperbarui!' : 'Produk berhasil ditambahkan!'));
+        resetForm();
+        fetchProduk();
+      } else {
+        alert(result.error || (isEditMode ? 'Gagal memperbarui produk.' : 'Gagal menambahkan produk.'));
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert(isEditMode ? 'Terjadi kesalahan saat memperbarui produk.' : 'Terjadi kesalahan saat menambahkan produk.');
+    }
+  };
+
+  const handleDelete = async (produk_id) => {
+    if (!window.confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
+
+    const formDataObj = new FormData();
+    formDataObj.append('produk_id', produk_id);
+
+    try {
+      const response = await fetch(API_DELETE, {
+        method: 'POST',
+        body: formDataObj,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message || 'Produk berhasil dihapus!');
+        fetchProduk();
+      } else {
+        alert(result.error || 'Gagal menghapus produk.');
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      alert('Terjadi kesalahan saat menghapus produk.');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    if (!isModalOpen) resetForm();
+  };
+
+  const resetForm = () => {
+    setFormData({
+      produk_id: '',
+      kategori_id: '',
+      produk_judul: '',
+      produk_harga: '',
+      produk_deskripsi: '',
+      produk_image: null,
+      stok: '',
+    });
+    setIsEditMode(false);
+  };
+
+  const handleEdit = (item) => {
+    setFormData({
+      produk_id: item.produk_id,
+      kategori_id: item.kategori_id,
+      produk_judul: item.produk_judul,
+      produk_harga: item.produk_harga,
+      produk_deskripsi: item.produk_deskripsi,
+      produk_image: null,
+      stok: item.stok,
+    });
+    setIsEditMode(true);
+    setIsModalOpen(true);
+  };
+
+  return (
+    <div className="container mt-5">
+      <h1 className="text-center mb-4" style={{ color: '#6f4e37' }}>Manajemen Produk</h1>
+      <div className="text-center mb-3">
+        <Link to="/dashboard">
+          <button className="back-to-dashboard-btn" style={{ backgroundColor: '#6f4e37', color: '#fff' }}>Back to Dashboard</button>
+        </Link>
+        <button className="btn btn-primary" onClick={toggleModal} style={{ backgroundColor: '#8b5e34', border: 'none' }}>
+          Tambah Produk
+        </button>
+      </div>
+
       {isModalOpen && (
-        <div className="modal-overlay" onClick={toggleModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <form onSubmit={handleSubmit} className="produk-form">
-              <h2>{editingId ? 'Edit Produk' : 'Tambah Produk Baru'}</h2>
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="kategori_id"
-                  value={formData.kategori_id}
-                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-                  placeholder="ID Kategori"
-                  required
-                />
+        <div className="modal d-block" tabIndex="-1" onClick={toggleModal}>
+          <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content" style={{ backgroundColor: '#fff8f0' }}>
+              <div className="modal-header">
+                <h5 className="modal-title" style={{ color: '#6f4e37' }}>
+                  {isEditMode ? 'Edit Produk' : 'Tambah Produk Baru'}
+                </h5>
+                <button type="button" className="btn-close" onClick={toggleModal}></button>
               </div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="produk_judul"
-                  value={formData.produk_judul}
-                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-                  placeholder="Judul Produk"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="number"
-                  name="produk_harga"
-                  value={formData.produk_harga}
-                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-                  placeholder="Harga Produk"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <textarea
-                  name="produk_deskripsi"
-                  value={formData.produk_deskripsi}
-                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-                  placeholder="Deskripsi Produk"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="produk_image"
-                  value={formData.produk_image}
-                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-                  placeholder="URL Gambar Produk"
-                />
-              </div>
-              <button type="submit" className="submit-btn">{editingId ? 'Update' : 'Tambah'} Produk</button>
-              <button type="button" className="close-modal-btn" onClick={toggleModal}>Tutup</button>
-            </form>
+              <form onSubmit={handleSubmit}>
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label htmlFor="produk_judul" className="form-label">Judul Produk</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="produk_judul" 
+                      name="produk_judul" 
+                      value={formData.produk_judul} 
+                      onChange={handleInputChange} 
+                      required
+                    />
+                  </div>
+                  
+                  <div className="mb-3">
+                    <label htmlFor="produk_harga" className="form-label">Harga</label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      id="produk_harga" 
+                      name="produk_harga" 
+                      value={formData.produk_harga} 
+                      onChange={handleInputChange} 
+                      required
+                    />
+                  </div>
+                  
+                  <div className="mb-3">
+                    <label htmlFor="produk_deskripsi" className="form-label">Deskripsi</label>
+                    <textarea 
+                      className="form-control" 
+                      id="produk_deskripsi" 
+                      name="produk_deskripsi" 
+                      value={formData.produk_deskripsi} 
+                      onChange={handleInputChange} 
+                      required
+                    ></textarea>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <label htmlFor="kategori_id" className="form-label">Kategori</label>
+                    <select 
+                      className="form-select" 
+                      id="kategori_id" 
+                      name="kategori_id" 
+                      value={formData.kategori_id} 
+                      onChange={handleInputChange} 
+                      required
+                    >
+                      <option value="">Pilih Kategori</option>
+                      {kategori.map((cat) => (
+                        <option key={cat.kategori_id} value={cat.kategori_id}>
+                          {cat.kategori_nama}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <label htmlFor="stok" className="form-label">Stok</label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      id="stok" 
+                      name="stok" 
+                      value={formData.stok} 
+                      onChange={handleInputChange} 
+                      required
+                    />
+                  </div>
+                  
+                  <div className="mb-3">
+                    <label htmlFor="produk_image" className="form-label">Gambar Produk</label>
+                    <input 
+                      type="file" 
+                      className="form-control" 
+                      id="produk_image" 
+                      name="produk_image" 
+                      onChange={handleInputChange} 
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-success" style={{ backgroundColor: '#4caf50' }}>
+                    {isEditMode ? 'Perbarui' : 'Tambah'}
+                  </button>
+                  <button type="button" className="btn btn-secondary" onClick={toggleModal} style={{ backgroundColor: '#e74c3c' }}>
+                    Tutup
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
 
-      <table className="produk-table">
-        <thead>
+      <table className="table table-striped table-bordered">
+        <thead className="table-dark" style={{ backgroundColor: '#6f4e37' }}>
           <tr>
             <th>ID</th>
-            <th>ID Kategori</th>
+            <th>Kategori</th>
             <th>Judul</th>
             <th>Harga</th>
             <th>Deskripsi</th>
+            <th>Stok</th>
             <th>Gambar</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
-          {produk.map((produk) => (
-            <tr key={produk.produk_id}>
-              <td>{produk.produk_id}</td>
-              <td>{produk.kategori_id}</td>
-              <td>{produk.produk_judul}</td>
-              <td>{produk.produk_harga}</td>
-              <td>{produk.produk_deskripsi}</td>
-              <td><img src={produk.produk_image} alt={produk.produk_judul} className="produk-image" /></td>
+          {produk.map((item) => (
+            <tr key={item.produk_id}>
+              <td>{item.produk_id}</td>
+              <td>{item.kategori_nama}</td>
+              <td>{item.produk_judul}</td>
+              <td>{item.produk_harga}</td>
+              <td>{item.produk_deskripsi}</td>
+              <td>{item.stok}</td>
               <td>
-                <button onClick={() => handleEdit(produk)} className="edit-btn">Edit</button>
-                <button onClick={() => handleDelete(produk.produk_id)} className="delete-btn">Hapus</button>
+                <img src={`http://localhost/images/${item.produk_image}`} alt={item.produk_judul} width="100" />
+              </td>
+              <td>
+                <button onClick={() => handleEdit(item)} className="btn btn-warning">Edit</button>
+                <button onClick={() => handleDelete(item.produk_id)} className="btn btn-danger ml-2">Delete</button>
               </td>
             </tr>
           ))}

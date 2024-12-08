@@ -1,43 +1,59 @@
 .product-list {
-    background: #252b42;
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    flex: 2;
-  }  
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .product-card {
-    background: #333344;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    color: white;
-  }
-  .product-card h3 {
-    font-size: 18px;
-  }
-  .product-card p {
-    font-size: 14px;
-    margin: 5px 0;
-  }
-  .product-card button {
-    background: #f05454;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .product-card button:hover {
-    background: #d03a3a;
-  }
-  .product-card button.disabled {
-    background: #888888;
-    cursor: not-allowed;
-  }
-  
+  background: #3e2a47; /* Dark coffee brown background */
+  color: #f4e1d2; /* Light cream color for text */
+  padding: 20px;
+  border-radius: 8px;
+  flex: 2;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  background: #4e3b31; /* Rich coffee brown background */
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: #f4e1d2; /* Light cream color for text */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* Subtle hover effect for product cards */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Soft shadow on hover */
+}
+
+.product-card h3 {
+  font-size: 18px;
+  color: #f4e1d2; /* Light cream color for titles */
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  font-size: 14px;
+  margin: 5px 0;
+  color: #d1c2b8; /* Soft beige color for description text */
+}
+
+.product-card button {
+  background: #c87c6b; /* Light coffee red color */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.product-card button:hover {
+  background: #b56a5a; /* Darker coffee red color on hover */
+}
+
+.product-card button.disabled {
+  background: #888888;
+  cursor: not-allowed;
+}

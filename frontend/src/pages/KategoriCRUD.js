@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/KategoriCRUD.css'; // Import custom styles for Kategori CRUD
+import { Link } from 'react-router-dom';
+import '../styles/KategoriCRUD.css'; 
+
 
 const API_URL = 'http://localhost/api/kategori_api.php';
 
@@ -89,8 +91,12 @@ const KategoriCRUD = () => {
   }, []);
 
   return (
+    
     <div className="kategori-crud-container">
       <h1>Kategori Management</h1>
+      <Link to="/dashboard">
+        <button className="back-to-dashboard-btn">Back to Dashboard</button>
+      </Link>
       <button onClick={toggleModal} className="open-modal-btn">Add Kategori</button>
 
       {/* Modal */}

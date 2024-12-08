@@ -47,16 +47,20 @@ const Products = ({ activeCategory, addToOrder }) => {
           key={index}
           onClick={() =>
             addToOrder({
+              product_id: product.produk_id, // Add product_id here
               name: product.produk_judul,
               price: product.produk_harga,
               quantity: 1,
             })
           }
         >
-          <img src={product.produk_image} alt={product.produk_judul} />
+          <img
+            src={`http://localhost/api/uploads/${product.produk_image}`}
+            alt={product.produk_judul}
+          />
           <h3>{product.produk_judul}</h3>
           <p>Rp {product.produk_harga.toLocaleString()}</p>
-          <span>Tinggal {product.stock} porsi</span>
+          {/* <span>Tinggal {product.stock} porsi</span> */}
         </div>
       ))}
     </div>
